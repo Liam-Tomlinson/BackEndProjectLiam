@@ -45,4 +45,25 @@ describe('GET /api', () => {
     })
 })
 })
-   
+
+describe('GET /api/articles', () => {
+  test('status:200, responds wth correct status', () => {
+      return request(app)
+        .get('/api/articles/1')
+        .expect(200);    
+  })
+  test('Checks that endpoint responds with correct data', () => {
+    return request(app)
+    .get('/api/articles/1').then(({body}) => 
+    {
+      expect(typeof body).toEqual("object")
+      expect(body.data[0].article_id).toBe(1)
+      expect(body.data[0].votes).toBe(100)      
+    })
+  })
+  test('Status:404, responds with correct status', () => {
+    return request(app)
+    .get('/api/articles/500')
+    .expect(404)
+  })
+})
