@@ -63,6 +63,7 @@ describe('GET /api/articles', () => {
   })
   test('Status:404, responds with correct status', () => {
     return request(app)
+    //check for errors
     .get('/api/articles/500')
     .expect(404)
   })
