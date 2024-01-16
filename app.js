@@ -1,5 +1,5 @@
 const express = require("express")
-const { getTopics } = require('./controllers/topics.controllers')
+const { getTopics, getApiInfo } = require('./controllers/topics.controllers')
 
 
 const app = express();
@@ -8,5 +8,7 @@ const app = express();
 
 //app.get always referecnes the controller.   
 app.get("/api/topics", getTopics);
+
+app.get("/api", getApiInfo);
 
   module.exports = { app };

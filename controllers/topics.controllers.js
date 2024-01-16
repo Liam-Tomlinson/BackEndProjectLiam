@@ -1,4 +1,5 @@
-const { fetchTopics } = require('../Models/topics.models')
+const { fetchTopics, fetchApiInfo } = require('../Models/topics.models')
+const endPoints = require('../endpoints.json')
 
 
 exports.getTopics = (req, res) => {
@@ -6,10 +7,10 @@ exports.getTopics = (req, res) => {
 
 };
 
+exports.getApiInfo = (req, res) => {
+    res.status(200).send(endPoints)
+}
 
 
 
 
-exports.sendSnacks = (req, res) => {
-    selectSnacks().then((snacks) => res.status(200).send({ snacks }));
-  };
