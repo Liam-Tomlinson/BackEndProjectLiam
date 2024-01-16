@@ -1,5 +1,5 @@
-const { fetchTopics, fetchApiInfo } = require('../Models/topics.models')
-const endPoints = require('../endpoints.json')
+const { fetchTopics} = require('../Models/topics.models')
+
 
 
 exports.getTopics = (req, res) => {
@@ -7,9 +7,7 @@ exports.getTopics = (req, res) => {
 
 };
 
-exports.getApiInfo = (req, res) => {
-    res.status(200).send(endPoints)
-}
+
 
 
 

@@ -3,6 +3,7 @@ const db = require("../db/connection");
 const { app } = require("../app");
 const data = require('../db/data/test-data')
 const seed = require("../db/seeds/seed");
+const endpoints = require('../endpoints.json')
 
  beforeEach(() => {
       return seed(data);
@@ -18,7 +19,7 @@ describe('GET /api/topics', () => {
           .get('/api/topics')
           .expect(200);    
     })
-    test('checks that api responds with the correct data', () => {
+    test('checks that endpoint responds with the correct data', () => {
       return request(app)
       .get('/api/topics').then(({body}) => 
       {
@@ -35,5 +36,13 @@ describe('GET /api', () => {
     .get('/api')
     .expect(200)
   })
+  test('checks that endpoint responds with correct JSON file', () => {
+    return request(app)
+    .get('/api').then(({body}) =>
+    {
+      expect(body).toEqual(endpoints)
+      expect(typeof body).toEqual("object")
+    })
+})
 })
    
