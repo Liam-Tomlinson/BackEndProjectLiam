@@ -18,6 +18,22 @@ describe('GET /api/topics', () => {
           .get('/api/topics')
           .expect(200);    
     })
+    test('checks that api responds with the correct data', () => {
+      return request(app)
+      .get('/api/topics').then(({body}) => 
+      {
+        expect(typeof body.data[0]).toBe('object')
+        expect(body.data.length).toBe(3)
+      })
+    })
     })
 
+
+describe('GET /api', () => {
+  test('status:200, responds with correct status', () => {
+    return request(app)
+    .get('/api')
+    .expect(200)
+  })
+})
    
