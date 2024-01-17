@@ -46,7 +46,8 @@ describe('GET /api', () => {
 })
 })
 
-describe('GET /api/articles', () => {
+
+describe('GET /api/articles/:article_id', () => {
   test('status:200, responds wth correct status', () => {
       return request(app)
         .get('/api/articles/1')
@@ -58,13 +59,25 @@ describe('GET /api/articles', () => {
     {
       expect(typeof body).toEqual("object")
       expect(body.data[0].article_id).toBe(1)
-      expect(body.data[0].votes).toBe(100)      
+      expect(body.data[0].title).toBe("Living in the shadow of a great man")
+      expect(body.data[0].topic).toBe("mitch")
+      expect(body.data[0].author).toBe("butter_bridge")
+      expect(body.data[0].created_at).toBe("2020-07-09T20:11:00.000Z")    
+      expect(body.data[0].votes).toBe(100) 
+      expect(body.data[0].article_img_url).toBe('https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700') 
+      
     })
   })
   test('Status:404, responds with correct status', () => {
     return request(app)
-    //check for errors
     .get('/api/articles/500')
     .expect(404)
+  })
+  test('Check correct 404 error message is sent', () => {
+    return request(app)
+    .get('/api/articles/500').then(({body}) =>
+    {
+      expect(body.data).toEqual("Status: 404, endpoint not found")
+    })
   })
 })
