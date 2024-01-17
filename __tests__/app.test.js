@@ -3,7 +3,7 @@ const db = require("../db/connection");
 const { app } = require("../app");
 const data = require('../db/data/test-data')
 const seed = require("../db/seeds/seed");
-const endpoints = require('../endpoints.json')
+const endpoints = require('../endpoints.json');
 
  beforeEach(() => {
       return seed(data);
@@ -80,4 +80,33 @@ describe('GET /api/articles/:article_id', () => {
       expect(body.data).toEqual("Status: 404, endpoint not found")
     })
   })
+})
+
+
+describe('CORE: GET /api/articles', () => {
+  test('status:200, responds wth correct status', () => {
+    return request(app)
+      .get('/api/articles')
+      .expect(200);    
+})
+test('Checks endpoint responds with the correct data', () => {
+  return request(app)
+  .get('/api/articles').then(({body}) => 
+  {
+    expect(typeof body).toEqual('object')
+    expect(body.data[0].article_id).toBe(7)
+    expect(body.data[0].title).toBe('Z')
+    expect(body.data[0].topic).toBe('mitch')
+    expect(body.data[0].author).toBe('icellusedkars')
+    expect(body.data[0].created_at).toBe('2020-01-07T14:08:00.000Z')
+    expect(body.data[0].votes).toBe(0)
+    expect(body.data[0].article_img_url).toBe('https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700',)
+    expect(body.data[0].comment_count).toBe(0)
+  })
+})
+test('status: 404, responds with the correct status', () => {
+  return request(app)
+  .get('/api/articlessss')
+  .expect(404)
+})
 })

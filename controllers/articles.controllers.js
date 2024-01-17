@@ -12,7 +12,7 @@ exports.getArticles = (req, res) => {
         
          }).catch((data) => {
             
-            if(data = 'Status: 404, endpoint not found')
+            if(data === 'Status: 404, endpoint not found')
             {
                 res.status(404).send({ data })
             }
