@@ -28,6 +28,6 @@
   },
   "GET /api/articles/:article_id/comments": {
     "description": "get all comments for an article.",
-    "queries": ["comment_id", "body", "article_id", "author", "votes", "created_at"],
+    "queries": ["comment_id", "body", "article_id", "author", "votes", "created_at"]
     
 }}

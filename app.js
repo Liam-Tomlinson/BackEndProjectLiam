@@ -4,6 +4,7 @@ const { getApiInfo } = require('./controllers/api.controllers')
 const { getArticles } = require('./controllers/articles.controllers')
 const { getAllArticles } = require('./controllers/articles5.controllers')
 const { getArticleComments } = require('./controllers/getArtComments.controllers') 
+const { postComments } = require('./controllers/postComments.controllers')
 
 
 const app = express();
@@ -20,6 +21,8 @@ app.get(`/api/articles/:article_ID`, getArticles);
 app.get('/api/articles', getAllArticles);
 
 app.get('/api/articles/:article_id/comments', getArticleComments);
+
+//app.post('/api/articles/:article_id/comments', postComments);
 
 app.all('*', (req, res) => {res.status(404).send()});
 

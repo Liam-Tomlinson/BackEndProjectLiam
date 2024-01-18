@@ -4,7 +4,7 @@ exports.fetchArticles = (req) => {
 
     const articlesId = req.params.article_ID
 
-    return db.query(`SELECT * FROM articles WHERE article_id=${articlesId}`).then(({rows}) =>{
+    return db.query(`SELECT * FROM articles WHERE article_id=$1`, [articlesId]).then(({rows}) =>{
         
         if(rows.length === 0)
         {

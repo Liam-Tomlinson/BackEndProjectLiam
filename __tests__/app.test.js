@@ -83,7 +83,7 @@ describe('GET /api/articles/:article_id', () => {
 })
 
 
-describe('CORE: GET /api/articles', () => {
+describe('GET /api/articles', () => {
   test('status:200, responds wth correct status', () => {
     return request(app)
       .get('/api/articles')
@@ -119,29 +119,55 @@ describe('GET /api/articles/:article_id/comments', () =>
       .get('/api/articles/1/comments')
       .expect(200);    
 })
-test('check endpoint responds with the correct data', () => {
+test('check endpoint responds with the data inside comment', () => {
   return request(app)
   .get('/api/articles/1/comments').then(({body}) => 
   {
-    console.log(body)
     expect(typeof body).toEqual('object')
-    expect(body.data[0].comment_id).toBe(5)
-    expect(body.data[0].body).toBe('I hate streaming noses')
-    expect(body.data[0].article_id).toBe(1)
-    expect(body.data[0].author).toBe('icellusedkars')
-    expect(body.data[0].votes).toBe(0)
-    expect(body.data[0].created_at).toBe('2020-11-03T21:00:00.000Z')
+    expect(body.comments[0].comment_id).toBe(5)
+    expect(body.comments[0].body).toBe('I hate streaming noses')
+    expect(body.comments[0].article_id).toBe(1)
+    expect(body.comments[0].author).toBe('icellusedkars')
+    expect(body.comments[0].votes).toBe(0)
+    expect(body.comments[0].created_at).toBe('2020-11-03T21:00:00.000Z')
     
   })
 })
+for(let i = 0; i < 11; i++)
+{
+  test('Check endpoint responds with the correct comments', () => 
+{
+      return request(app)
+  .get('/api/articles/1/comments').then(({body}) => 
+    {
+      expect(body.comments[i].article_id).toBe(1)
+    })
+})
+}
+
 test('status:404, responds with correct status', () => {
   return request(app)
   .get('/api/articles/500/comments')
   .expect(404)
 })
 
+test('checks correct error message is sent when article not found', () => {
+  return request(app)
+  .get('/api/articles/500/comments').then(({body}) => 
+  {
+    console.log(body)
+
+  })
+
 })
 
+})
+
+
+// describe('POST /api/articles/:article_id/comments', () => 
+// {
+
+// })
 
 
 
