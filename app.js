@@ -3,6 +3,7 @@ const { getTopics } = require('./controllers/topics.controllers')
 const { getApiInfo } = require('./controllers/api.controllers')
 const { getArticles } = require('./controllers/articles.controllers')
 const { getAllArticles } = require('./controllers/articles5.controllers')
+const { getArticleComments } = require('./controllers/getArtComments.controllers') 
 
 
 const app = express();
@@ -18,7 +19,9 @@ app.get(`/api/articles/:article_ID`, getArticles);
 
 app.get('/api/articles', getAllArticles);
 
-app.all('*', (req, res) => {res.status(404).send()})
+app.get('/api/articles/:article_id/comments', getArticleComments);
+
+app.all('*', (req, res) => {res.status(404).send()});
 
 
   module.exports = { app };
