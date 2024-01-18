@@ -155,7 +155,6 @@ test('checks correct error message is sent when article not found', () => {
   return request(app)
   .get('/api/articles/500/comments').then(({body}) => 
   {
-    console.log(body)
 
   })
 
@@ -164,10 +163,63 @@ test('checks correct error message is sent when article not found', () => {
 })
 
 
-// describe('POST /api/articles/:article_id/comments', () => 
-// {
+describe('POST /api/articles/:article_id/comments', () => 
+{
+  const newComment = {
+    username: 'butter_bridge', 
+    body: 'This is my amazing new comment',
+   
+  };
+  const wrongComment = {
+    username: 'butter_bridge', 
+  };
+  test('status:201, responds with correct status after posting a comment', () => {
+    return request(app)
+      .post('/api/articles/1/comments')
+      .send(newComment)
+      .expect(201); 
+  });
 
-// })
+  test('Checks correct data is inserted into database', () => {
+    return request(app)
+    .post('/api/articles/1/comments')
+    .send(newComment).then(({body}) => {
+      expect(typeof body).toBe('object')
+      expect(body[0].article_id).toBe(1)
+      expect(body[0].body).toBe('This is my amazing new comment')
+      expect(body[0].author).toBe('butter_bridge')
+      expect(body[0].votes).toBe(0)
+      expect(typeof body[0].created_at).toBe('string')
+    })
+  })
+
+  test('status:404, responds with correct status', () => {
+    return request(app)
+    .post('/api/articles/500/comments')
+    .send(newComment)
+    .expect(404)
+  })
+
+  test('Checks error message is correct on 404 status', () => {
+    return request(app)
+    .post('/api/articles/500/comments')
+    .send(newComment).then(({text}) => {
+      expect(text).toBe('status: 404, article does not exisit')
+    })
+  })
+  test('Status: 400, responds with correct status', () => {
+    return request(app)
+    .post('/api/articles/1/comments')
+    .send(wrongComment)
+    .expect(400)
+  })
+  test('Checks error message is correct on 400 status', () => {
+    return request(app)
+    .post('/api/articles/1/comments')
+    .send(wrongComment).then(({text}) => {
+      expect(text).toBe('status: 400, missing content')
+  })
 
 
-
+  })
+})

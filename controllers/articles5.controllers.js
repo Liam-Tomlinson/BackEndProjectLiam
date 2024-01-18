@@ -1,5 +1,5 @@
 const { fetchAllArticles } = require('../Models/articles5.models')
-const db = require('../db/connection')
+
 
 exports.getAllArticles = (req, res) => 
 {

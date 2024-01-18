@@ -9,7 +9,7 @@ const { postComments } = require('./controllers/postComments.controllers')
 
 const app = express();
 
-//app.use(express.json())
+app.use(express.json())
 
 //app.get always referecnes the controller.   
 app.get("/api/topics", getTopics);
@@ -22,7 +22,7 @@ app.get('/api/articles', getAllArticles);
 
 app.get('/api/articles/:article_id/comments', getArticleComments);
 
-//app.post('/api/articles/:article_id/comments', postComments);
+app.post('/api/articles/:article_id/comments', postComments);
 
 app.all('*', (req, res) => {res.status(404).send()});
 
