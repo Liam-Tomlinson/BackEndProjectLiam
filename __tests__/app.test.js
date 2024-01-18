@@ -110,3 +110,38 @@ test('status: 404, responds with the correct status', () => {
   .expect(404)
 })
 })
+
+
+describe('GET /api/articles/:article_id/comments', () => 
+{
+  test('status:200, responds wth correct status', () => {
+    return request(app)
+      .get('/api/articles/1/comments')
+      .expect(200);    
+})
+test('check endpoint responds with the correct data', () => {
+  return request(app)
+  .get('/api/articles/1/comments').then(({body}) => 
+  {
+    console.log(body)
+    expect(typeof body).toEqual('object')
+    expect(body.data[0].comment_id).toBe(5)
+    expect(body.data[0].body).toBe('I hate streaming noses')
+    expect(body.data[0].article_id).toBe(1)
+    expect(body.data[0].author).toBe('icellusedkars')
+    expect(body.data[0].votes).toBe(0)
+    expect(body.data[0].created_at).toBe('2020-11-03T21:00:00.000Z')
+    
+  })
+})
+test('status:404, responds with correct status', () => {
+  return request(app)
+  .get('/api/articles/500/comments')
+  .expect(404)
+})
+
+})
+
+
+
+
