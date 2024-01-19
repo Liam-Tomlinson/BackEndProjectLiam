@@ -219,7 +219,81 @@ describe('POST /api/articles/:article_id/comments', () =>
     .send(wrongComment).then(({text}) => {
       expect(text).toBe('status: 400, missing content')
   })
-
-
   })
 })
+
+describe('GET /api/articles/:article_id', () => 
+{
+  test('status:200, responds wth correct status', () => {
+    return request(app)
+      .patch('/api/articles/1')
+      .send({ inc_votes : 1 })
+      .expect(200);    
+})
+test('Checks endpoint updates the correct information (increment)', () => {
+  const updateVote = { inc_votes : 1 }
+  return request(app)
+  .patch('/api/articles/1')
+  .send(updateVote).then(({body}) => {
+    expect(typeof body).toBe('object')
+    expect(body[0].article_id).toBe(1)
+    expect(body[0].title).toBe('Living in the shadow of a great man')
+    expect(body[0].topic).toBe('mitch')
+    expect(body[0].author).toBe('butter_bridge')
+    expect(body[0].body).toBe('I find this existence challenging')
+    expect(body[0].created_at).toBe('2020-07-09T20:11:00.000Z')
+    expect(body[0].votes).toBe(101)
+    expect(body[0].article_img_url).toBe('https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700')
+  }) 
+})
+
+test('Checks endpoint updates the correct information (decrement)', () => {
+  const updateVote = { inc_votes : -100 }
+  return request(app)
+  .patch('/api/articles/1')
+  .send(updateVote).then(({body}) => {
+    expect(typeof body).toBe('object')
+    expect(body[0].article_id).toBe(1)
+    expect(body[0].title).toBe('Living in the shadow of a great man')
+    expect(body[0].topic).toBe('mitch')
+    expect(body[0].author).toBe('butter_bridge')
+    expect(body[0].body).toBe('I find this existence challenging')
+    expect(body[0].created_at).toBe('2020-07-09T20:11:00.000Z')
+    expect(body[0].votes).toBe(0)
+    expect(body[0].article_img_url).toBe('https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700')
+  }) 
+})
+test('status:404, returns correct status code', () => {
+  const updateVote = { inc_votes : 1 }
+  return request(app)
+  .patch('/api/articles/500')
+  .send(updateVote)
+  .expect(404)
+
+})
+test('returns correct error message on invalid article_id', () => {
+  const updateVote = { inc_votes : 1 }
+  return request(app)
+  .patch('/api/articles/500')
+  .send(updateVote).then(({text}) => {
+    expect(text).toBe('status: 404, article does not exist')
+  })
+})
+test('status:400, returns correct status code', () => {
+  const updateVote = { total_nonsense : 1 }
+  return request(app)
+  .patch('/api/articles/1')
+  .send(updateVote)
+  .expect(400)
+})
+test('Checks correct error message is sent when wrong patch given', () => {
+  const updateVote = { total_nonsense : 1 }
+  return request(app)
+  .patch('/api/articles/1')
+  .send(updateVote).then(({text}) => {
+    expect(text).toBe('status: 400, incorrect vote information given')
+  })
+  
+})
+})
+
