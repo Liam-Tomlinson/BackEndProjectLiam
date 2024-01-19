@@ -322,3 +322,34 @@ test('Checks correct error message is sent when wrong patch given', () => {
 })
 })
 
+describe('DELETE /api/comments/:comment_id', () => 
+{
+  test('status: 204, returns the correct status code', () => 
+  {
+    return request(app)
+    .delete('/api/comments/1')
+    .expect(204)
+  })
+  test('shows that the comment has been deleted', () =>
+  {
+    return request(app)
+    .delete('/api/comments/1').then(({body}) => 
+    {
+      expect(body).toEqual({})
+    })
+  })
+  test('status: 404, responds with correct status code', () => 
+  {
+    return request(app)
+    .delete('/api/comments/500')
+    .expect(404)
+  })
+  test('responds with the correct 404 error message', () => 
+  {
+    return request(app)
+    .delete('/api/comments/500').then(({ text }) => 
+    {
+      expect(text).toBe('status: 404, comment does not exist')
+    })
+  })
+})
