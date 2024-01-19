@@ -1,7 +1,7 @@
 const db = require('../db/connection')
 
 
-exports.fetchPostComments = (username, body, article_id) => 
+exports.PostComments = (username, body, article_id) => 
 {
     if(body === undefined || username === undefined)
         {

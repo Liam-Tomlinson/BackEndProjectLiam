@@ -213,14 +213,40 @@ describe('POST /api/articles/:article_id/comments', () =>
     .send(wrongComment)
     .expect(400)
   })
-  test('Checks error message is correct on 400 status', () => {
+  test('Checks error message is correct on 400 status (no body)', () => {
     return request(app)
     .post('/api/articles/1/comments')
     .send(wrongComment).then(({text}) => {
       expect(text).toBe('status: 400, missing content')
   })
   })
+  test('Status: 404, responds with correct status code. (invalid user)', () => {
+  const invalidUsername = {
+    username: 'jam_bridge', 
+    body: 'This is my amazing new comment'
+  };
+    return request(app)
+    .post('/api/articles/1/comments')
+    .send(invalidUsername)
+    .expect(404)
+  })
+  test('responds with correct error message when user in invalid', () => {
+    const invalidUsername = {
+      username: 'jam_bridge', 
+      body: 'This is my amazing new comment'
+    };
+    return request(app)
+    .post('/api/articles/1/comments')
+    .send(invalidUsername).then(({text}) => {
+      expect(text).toBe('status: 404, username does not exisit')
+    })
+  })
 })
+
+
+
+
+
 
 describe('GET /api/articles/:article_id', () => 
 {
@@ -293,7 +319,6 @@ test('Checks correct error message is sent when wrong patch given', () => {
   .send(updateVote).then(({text}) => {
     expect(text).toBe('status: 400, incorrect vote information given')
   })
-  
 })
 })
 

@@ -1,4 +1,4 @@
-const { fetchPostComments } = require('../Models/postComments.models')
+const { PostComments } = require('../Models/postComments.models')
 
 
 exports.postComments = (req, res) =>
@@ -6,7 +6,7 @@ exports.postComments = (req, res) =>
     const { username, body } = req.body
     const { article_id} = req.params
 
-    fetchPostComments(username, body, article_id).then((newComment) =>
+    PostComments(username, body, article_id).then((newComment) =>
     {
         res.status(201).send(newComment)
     }).catch((err) => {
