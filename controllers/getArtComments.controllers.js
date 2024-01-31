@@ -1,5 +1,5 @@
 const { fetchArticleComments } = require('../Models/getArtComments.models')
-const db = require('../db/connection')
+
 
 
 exports.getArticleComments = (req, res) => 

@@ -353,3 +353,24 @@ describe('DELETE /api/comments/:comment_id', () =>
     })
   })
 })
+
+describe('CORE: GET /api/users', () => 
+{
+  test('status:200, responds wth correct status', () => {
+    return request(app)
+      .get('/api/users')
+      .expect(200);    
+})
+test('status:200, responds wth correct status', () => {
+
+  return request(app)
+    .get('/api/users').then(({ body }) => {
+      expect(body.users.length).toEqual(4)
+      expect(typeof body).toEqual('object')
+      expect(body.users[0].username).toEqual('butter_bridge')
+      expect(body.users[0].name).toEqual('jonny')
+      expect(body.users[0].avatar_url).toEqual('https://www.healthytherapies.com/wp-content/uploads/2016/06/Lime3.jpg')
+    })    
+})
+
+})

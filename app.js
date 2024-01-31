@@ -7,6 +7,7 @@ const { getArticleComments } = require('./controllers/getArtComments.controllers
 const { postComments } = require('./controllers/postComments.controllers')
 const { patchArticles } = require('./controllers/patch.articles.controllers')
 const { deleteComments } = require('./controllers/deleteComments.controllers')
+const { getAllUsers } = require('./controllers/getUsers.controllers')
 
 
 const app = express();
@@ -29,6 +30,8 @@ app.post('/api/articles/:article_id/comments', postComments);
 app.patch('/api/articles/:article_id', patchArticles);
 
 app.delete('/api/comments/:comment_id', deleteComments);
+
+app.get("/api/users", getAllUsers);
 
 app.all('*', (req, res) => {res.status(404).send()});
 
