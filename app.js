@@ -8,7 +8,9 @@ const { postComments } = require('./controllers/postComments.controllers')
 const { patchArticles } = require('./controllers/patch.articles.controllers')
 const { deleteComments } = require('./controllers/deleteComments.controllers')
 const { getAllUsers } = require('./controllers/getUsers.controllers')
+const cors = require('cors')
 
+app.use(cors())
 
 const app = express();
 
