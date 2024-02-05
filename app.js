@@ -10,7 +10,7 @@ const { deleteComments } = require('./controllers/deleteComments.controllers')
 const { getAllUsers } = require('./controllers/getUsers.controllers')
 const cors = require('cors')
 
-app.use(cors())
+app.use(cors());
 
 const app = express();
 
